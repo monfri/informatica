@@ -8,6 +8,7 @@ int main(int argc, char* argv[]) {
     rp=0;
     cp=0;
     n=0;
+    i = j = 0;
     FILE *f;
     mossaprecedente=1;
     for (i=0; i<R;i++) {
@@ -20,24 +21,29 @@ int main(int argc, char* argv[]) {
         printf ("error 1: il programma verra' terminato\n");
         exit (1);
     }
-
+    
+    fscanf (f,"%c", &palude[i][j]);
     while (palude[i][j] \= "EOF") {
         while (palude[i][j] \= "\n") {
-            fscanf (f,"%c", &palude[i][j]);
             j++;
+            fscanf (f,"%c", &palude[i][j]);
         }
-        fscanf (f, "%c", &c);
+        palude[i][j] = "-"
         i++;
+        j=0;
+        fscanf (f, "%c", &c);
     }
     j = 0;
     i = 0;
      while (palude[i][j] \= "EOF") {
+        printf("-");
         while (palude[i][j] \= "\n") {
                 printf ("%c", palude [i] [j]);
                 j++;
         }
         printf ("\n");
         i++;
+        j=0;
      }
      fclose (f);
      while (palude [rp] [0]!='*'){
