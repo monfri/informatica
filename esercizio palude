@@ -1,0 +1,144 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define R 10
+#define C 10
+
+int main(int argc, char* argv[]) {
+    char palude [R] [C];
+    int i,j,rp,cp,mossaprecedente,n;
+    char c;
+    rp=0;
+    cp=0;
+    n=0;
+    FILE *f;
+    mossaprecedente=1;
+    for (i=0; i<R;i++) {
+        for (j=0; j<C; j++) {
+            palude [i] [j]='-';
+        }
+    }
+    f=fopen ("palude.txt", "r");
+    if (f==NULL) {
+        printf ("error 1: il programma verra' terminato\n");
+        exit (1);
+    }
+
+    for (i=0; i<R; i++) {
+        for (j=0;j<C; j++) {
+            fscanf (f,"%c", &palude[i][j]);
+        }
+        fscanf (f, "%c", &c);
+    }
+     for (i=0; i<R; i++) {
+        for (j=0;j<C; j++) {
+                printf ("%c", palude [i] [j]);
+        }
+        printf ("\n");
+     }
+     fclose (f);
+     while (palude [rp] [0]!='*'){
+     printf ("inserire la riga di partenza e premere invio:\n");
+     scanf ("%d", &rp);
+     if (palude [rp-1] [0]=='*') {
+        printf ("inserire una riga che parta con una roccia:\n");
+        }
+     }
+     while (palude[rp+1][cp]!='-'&& palude[rp-1][cp]!='-' && palude[rp][cp-1]!='-' && palude[rp][cp+1]!='-') {
+            switch (mossaprecedente) {                  //1 destra, 2 alto, 3 basso, 4 sinistra
+            case 1:
+                if(palude [rp+1][cp]=='*') {
+                    rp=rp+1;
+                    mossaprecedente=3;
+                    n++;
+                } else {
+                    if (palude [rp] [cp+1]=='*') {
+                        cp=cp+1;
+                        mossaprecedente=1;
+                        n++;
+                    } else {
+                    if (palude [rp-1] [cp]=='*') {
+                        rp=rp-1;
+                        mossaprecedente=2;
+                        n++;
+                    } else {
+                    if (palude [rp] [cp-1]=='*') {
+                        printf ("la palude non ha vie di uscita.\n");
+                        exit (1);
+                    }
+                    }
+                    }
+                }
+            case 2:
+                if(palude [rp][cp+1]=='*') {
+                    cp=cp+1;
+                    mossaprecedente=1;
+                    n++;
+                } else {
+                    if (palude [rp-1] [cp]=='*') {
+                        rp=rp-1;
+                        mossaprecedente=2;
+                        n++;
+                    } else {
+                    if (palude [rp] [cp-1]=='*') {
+                        cp=cp-1;
+                        mossaprecedente=4;
+                        n++;
+                    } else {
+                    if (palude [rp+1] [cp]=='*') {
+                        printf ("la palude non ha vie di uscita.\n");
+                        exit (1);
+                    }
+                    }
+                    }
+                }
+            case 3:
+                if(palude [rp][cp-1]=='*') {
+                    cp=cp-1;
+                    mossaprecedente=4;
+                    n++;
+                } else {
+                    if (palude [rp+1] [cp]=='*') {
+                        rp=rp+1;
+                        mossaprecedente=3;
+                        n++;
+                    } else {
+                    if (palude [rp] [cp+1]=='*') {
+                        cp=cp-1;
+                        mossaprecedente=1;
+                        n++;
+                    } else {
+                    if (palude [rp-1] [cp]=='*') {
+                        printf ("la palude non ha vie di uscita.\n");
+                        exit (1);
+                    }
+                    }
+                    }
+                }
+            case 4:
+                if(palude [rp-1][cp]=='*') {
+                    rp=rp-1;
+                    mossaprecedente=2;
+                    n++;
+                } else {
+                    if (palude [rp] [cp-1]=='*') {
+                        cp=cp-1;
+                        mossaprecedente=4;
+                        n++;
+                    } else {
+                    if (palude [rp+1] [cp]=='*') {
+                        rp=rp+1;
+                        mossaprecedente=3;
+                        n++;
+                    } else {
+                    if (palude [rp] [cp+1]=='*') {
+                        printf ("la palude non ha vie di uscita.\n");
+                        exit (1);
+                    }
+                    }
+                    }
+                }
+            }
+     }
+     printf ("per uscire dalla palude occorrono %d mosse.\n", n);
+     return 0;
+}
