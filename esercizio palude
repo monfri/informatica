@@ -1,7 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#define R 10
-#define C 10
 
 int main(int argc, char* argv[]) {
     char palude [R] [C];
@@ -23,17 +21,23 @@ int main(int argc, char* argv[]) {
         exit (1);
     }
 
-    for (i=0; i<R; i++) {
-        for (j=0;j<C; j++) {
+    while (palude[i][j] \= "EOF") {
+        while (palude[i][j] \= "\n") {
             fscanf (f,"%c", &palude[i][j]);
+            j++;
         }
         fscanf (f, "%c", &c);
+        i++;
     }
-     for (i=0; i<R; i++) {
-        for (j=0;j<C; j++) {
+    j = 0;
+    i = 0;
+     while (palude[i][j] \= "EOF") {
+        while (palude[i][j] \= "\n") {
                 printf ("%c", palude [i] [j]);
+                j++;
         }
         printf ("\n");
+        i++;
      }
      fclose (f);
      while (palude [rp] [0]!='*'){
